@@ -117,8 +117,8 @@ void Blink_func(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    HAL_GP
-    osDelay(1);
+   
+    osDelay(100);
   }
   /* USER CODE END Blink_func */
 }
