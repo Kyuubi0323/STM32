@@ -1,0 +1,5 @@
+etx_ota_update.c:39:13:etx_ota_download_and_flash	4
+etx_ota_update.c:93:20:etx_process_data	18
+etx_ota_update.c:217:17:etx_receive_chunk	12
+etx_ota_update.c:311:13:etx_ota_send_resp	1
+etx_ota_update.c:334:26:write_data_to_flash_app	7
