@@ -117,8 +117,8 @@ void Blink_func(void *argument)
   /* Infinite loop */
   for(;;)
   {
-   
-    osDelay(100);
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    osDelay(2000);
   }
   /* USER CODE END Blink_func */
 }
