@@ -1,0 +1,207 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * File Name          : freertos.c
+  * Description        : Code for freertos applications
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2024 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "usart.h"
+#include <string.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN Variables */
+extern UART_HandleTypeDef huart1;
+char *send_buf = "It's send buffer \r\n";
+char *str;
+char *recv_buf = "Task_receiver\n\r";
+/* USER CODE END Variables */
+/* Definitions for Task01 */
+osThreadId_t Task01Handle;
+const osThreadAttr_t Task01_attributes = {
+  .name = "Task01",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for Task02 */
+osThreadId_t Task02Handle;
+const osThreadAttr_t Task02_attributes = {
+  .name = "Task02",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for SimpleQueue */
+osMessageQueueId_t SimpleQueueHandle;
+const osMessageQueueAttr_t SimpleQueue_attributes = {
+  .name = "SimpleQueue"
+};
+/* Definitions for AdvancedQueue */
+osMessageQueueId_t AdvancedQueueHandle;
+const osMessageQueueAttr_t AdvancedQueue_attributes = {
+  .name = "AdvancedQueue"
+};
+
+/* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN FunctionPrototypes */
+
+/* USER CODE END FunctionPrototypes */
+
+void Task01_Handler(void *argument);
+void Task02_Handler(void *argument);
+
+void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+/**
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of SimpleQueue */
+  SimpleQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &SimpleQueue_attributes);
+
+  /* creation of AdvancedQueue */
+  AdvancedQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &AdvancedQueue_attributes);
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of Task01 */
+  Task01Handle = osThreadNew(Task01_Handler, NULL, &Task01_attributes);
+
+  /* creation of Task02 */
+  Task02Handle = osThreadNew(Task02_Handler, NULL, &Task02_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+}
+
+/* USER CODE BEGIN Header_Task01_Handler */
+/**
+  * @brief  Function implementing the Task01 thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_Task01_Handler */
+void Task01_Handler(void *argument)
+{
+  /* USER CODE BEGIN Task01_Handler */
+	int i = 222;
+	uint32_t TickDelay = pdMS_TO_TICKS(1000);
+	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 0);
+  /* Infinite loop */
+  for(;;)
+  {
+	  if(xQueueGenericSend(SimpleQueueHandle, &i, portMAX_DELAY, 1) == pdPASS)
+	  {
+		  char *queue_str = "Sucessful Send Queue \r\n";
+		  HAL_UART_Transmit(&huart1, (uint8_t *) queue_str, strlen(queue_str), 1000);
+	  }
+
+
+    osDelay(TickDelay);
+
+  }
+  /* USER CODE END Task01_Handler */
+}
+
+/* USER CODE BEGIN Header_Task02_Handler */
+/**
+* @brief Function implementing the Task02 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Task02_Handler */
+void Task02_Handler(void *argument)
+{
+  /* USER CODE BEGIN Task02_Handler */
+	uint32_t receive = 0;
+	uint32_t TickDelay = pdMS_TO_TICKS(3000);
+	char *true_buf = "Succesful Received\r\n";
+  /* Infinite loop */
+  for(;;)
+  {
+	  HAL_UART_Transmit(&huart1, (uint8_t *)recv_buf, strlen (recv_buf), 1000);
+	  if(xQueueReceive(SimpleQueueHandle, &receive, 1000) == pdPASS)
+	  {
+		  sprintf(str, " Successfully RECEIVED the number %ld to the queue\nLeaving RECEIVER Task\n\n\n",receive);
+		  HAL_UART_Transmit(&huart1, (uint8_t *)str, strlen (str), 1000);
+	  }
+	  else
+	  {
+		  HAL_UART_Transmit(&huart1, (uint8_t *)true_buf, strlen (true_buf), 1000);
+	  }
+
+    osDelay(TickDelay);
+  }
+  /* USER CODE END Task02_Handler */
+}
+
+/* Private application code --------------------------------------------------*/
+/* USER CODE BEGIN Application */
+
+/* USER CODE END Application */
+
