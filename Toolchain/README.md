@@ -7,10 +7,11 @@ Doing the following steps:
     ![Alt text](image/New_var.png)
 3. Add it into Path:
     ![Alt text](image/Path.png)
+   
     Click New: "%GCC_ARM%"
     ![Alt text](image/GCC.png)
-4. Add Make path:
+5. Add Make path:
     "$ENV{MAKE_PATH}\stm32_toolchain\make-3.81\bin"
-5. Add OpenOCD path:
+6. Add OpenOCD path:
     "$ENV{TOOL_PATH}\stm32_toolchain\OpenOCD-20231002-0.12.0\bin"
     ![Alt text](image/path1.png)
