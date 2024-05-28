@@ -49,6 +49,8 @@ UART_HandleTypeDef huart1;
 char *send_buf = "It's send buffer \r\n";
 char *str;
 char *recv_buf = "It's recv buffer\n\r";
+
+char *ringbuf[64];
 /* Definitions for Task01 */
 osThreadId_t Task01Handle;
 const osThreadAttr_t Task01_attributes = {
@@ -123,6 +125,9 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)ringbuf, 1);
+
+
 
   /* USER CODE END 2 */
 
@@ -296,7 +301,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	//HAL_UART_Transmit(&huart1, (uint8_t *)ringbuf, 1, 10);
+	HAL_UART_Receive_IT(&huart1, (uint8_t*)ringbuf, 1);
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_Task01_Handler */
