@@ -16,5 +16,5 @@ $(BUILD_DIR)/jflash: $(BUILD_DIR)/$(TARGET).bin
 jflash: $(BUILD_DIR)/jflash
 	JLinkExe -commanderscript $<
 ```
-<img src="image/New_var.png" alt="Logo" width="160" height="160">
+<img src="image/New_var.png" alt="Logo" width="800" height="300">
 3. Chạy lệnh make jflash ở terminal của prj
