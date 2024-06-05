@@ -1,0 +1,2 @@
+clock_reg.c:10:6:Clock_init	1
+clock_reg.c:20:6:Delay_ms	3

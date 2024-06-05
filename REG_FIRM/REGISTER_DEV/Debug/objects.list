@@ -1,0 +1,7 @@
+"./Src/clock_reg.o"
+"./Src/gpio_reg.o"
+"./Src/main.o"
+"./Src/syscalls.o"
+"./Src/sysmem.o"
+"./Src/uart_reg.o"
+"./Startup/startup_stm32f401ccux.o"

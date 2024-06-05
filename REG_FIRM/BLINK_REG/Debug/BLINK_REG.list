@@ -27,25 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000103a0  2**0
                   CONTENTS, READONLY
- 12 .comment      00000043  00000000  00000000  000103d0  2**0
+ 12 .debug_info   00000265  00000000  00000000  000103d0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_abbrev 0000013e  00000000  00000000  00010635  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_aranges 00000060  00000000  00000000  00010778  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_ranges 00000048  00000000  00000000  000107d8  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_macro  00001cf8  00000000  00000000  00010820  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_line   000006a9  00000000  00000000  00012518  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_str    00007d7a  00000000  00000000  00012bc1  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .comment      00000050  00000000  00000000  0001a93b  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00000247  00000000  00000000  00010413  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00000140  00000000  00000000  0001065a  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000060  00000000  00000000  000107a0  2**3
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 0000003e  00000000  00000000  00010800  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00001b3d  00000000  00000000  0001083e  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000066a  00000000  00000000  0001237b  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00007830  00000000  00000000  000129e5  2**0
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  000000bc  00000000  00000000  0001a218  2**2
-                  CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000005a  00000000  00000000  0001a2d4  2**0
+ 20 .debug_frame  000000bc  00000000  00000000  0001a98c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -248,8 +246,8 @@ int main(void)
  80002c8:	4a05      	ldr	r2, [pc, #20]	; (80002e0 <main+0x40>)
  80002ca:	f483 5300 	eor.w	r3, r3, #8192	; 0x2000
  80002ce:	6153      	str	r3, [r2, #20]
-		Delay(1000);
- 80002d0:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+		Delay(500);
+ 80002d0:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  80002d4:	f7ff ff94 	bl	8000200 <Delay>
 		PC->OUT ^= (1<<13);
  80002d8:	e7f4      	b.n	80002c4 <main+0x24>
