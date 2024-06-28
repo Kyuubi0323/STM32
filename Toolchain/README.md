@@ -15,6 +15,11 @@ Doing the following steps:
 6. Add OpenOCD path:
     "$ENV{TOOL_PATH}\stm32_toolchain\OpenOCD-20231002-0.12.0\bin"
     ![Alt text](image/path1.png)
+
+
+
+
+   # Set configurations in VSC
    ```
    {
     "configurations": [
