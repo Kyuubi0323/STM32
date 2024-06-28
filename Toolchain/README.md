@@ -45,7 +45,7 @@ Doing the following steps:
         }
     ],
     "version": 4
-}
+    }
 
 
 
