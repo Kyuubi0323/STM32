@@ -1,23 +1,32 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/clock_reg.c \
+../Src/gpio_reg.c \
 ../Src/main.c \
 ../Src/syscalls.c \
-../Src/sysmem.c 
+../Src/sysmem.c \
+../Src/uart_reg.c 
 
 OBJS += \
+./Src/clock_reg.o \
+./Src/gpio_reg.o \
 ./Src/main.o \
 ./Src/syscalls.o \
-./Src/sysmem.o 
+./Src/sysmem.o \
+./Src/uart_reg.o 
 
 C_DEPS += \
+./Src/clock_reg.d \
+./Src/gpio_reg.d \
 ./Src/main.d \
 ./Src/syscalls.d \
-./Src/sysmem.d 
+./Src/sysmem.d \
+./Src/uart_reg.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,7 +36,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+	-$(RM) ./Src/clock_reg.cyclo ./Src/clock_reg.d ./Src/clock_reg.o ./Src/clock_reg.su ./Src/gpio_reg.cyclo ./Src/gpio_reg.d ./Src/gpio_reg.o ./Src/gpio_reg.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su ./Src/uart_reg.cyclo ./Src/uart_reg.d ./Src/uart_reg.o ./Src/uart_reg.su
 
 .PHONY: clean-Src
 

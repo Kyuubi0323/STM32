@@ -1,0 +1,2 @@
+../Src/uart_reg.c:5:6:uart1_init	1
+../Src/uart_reg.c:35:6:GPIOA_tx_rx_uart1	1

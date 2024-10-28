@@ -33,34 +33,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := BLINK_REG
+BUILD_ARTIFACT_NAME := REGISTER_ST
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-BLINK_REG.elf \
+REGISTER_ST.elf \
 
 MAP_FILES += \
-BLINK_REG.map \
+REGISTER_ST.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-BLINK_REG.list \
+REGISTER_ST.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: BLINK_REG.elf secondary-outputs
+main-build: REGISTER_ST.elf secondary-outputs
 
 # Tool invocations
-BLINK_REG.elf BLINK_REG.map: $(OBJS) $(USER_OBJS) E:\GitHub\STM32\REG_FIRM\BLINK_REG\STM32F401CCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "BLINK_REG.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\GitHub\STM32\REG_FIRM\BLINK_REG\STM32F401CCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="BLINK_REG.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+REGISTER_ST.elf REGISTER_ST.map: $(OBJS) $(USER_OBJS) E:\GitHub\STM32\REG_FIRM\REGISTER_DEV\STM32F401CCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "REGISTER_ST.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\GitHub\STM32\REG_FIRM\REGISTER_DEV\STM32F401CCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="REGISTER_ST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -69,14 +69,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-BLINK_REG.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "BLINK_REG.list"
+REGISTER_ST.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "REGISTER_ST.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) BLINK_REG.elf BLINK_REG.list BLINK_REG.map default.size.stdout
+	-$(RM) REGISTER_ST.elf REGISTER_ST.list REGISTER_ST.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
